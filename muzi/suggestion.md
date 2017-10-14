@@ -15,7 +15,7 @@
 #### 对数据的建议：
 1. 我会将获得的注册信息传递给数据库；
 2. 我需要数据库根据数据的用户名返回注册时的密码；
-3. 函数的具体设计见muzi目录下demand.py文件。
+3. 函数的具体设计见muzi目录下[demand.py](https://github.com/sumin1123/Bookcrossing/blob/develop/muzi/demand.py)文件。
 
 
 #### 注册登录demo
