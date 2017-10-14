@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+</head>
+<body>
+
+  <div style="width:300px" align="center">
+
+    <div style="background-color:black;line-height:50px;height:50px">
+      <h4 align="center" style="color:white">更改个人信息</h4>
+    </div>
+
+    <div style="height:450px;">
+      <div style="height:50px">
+        <p align="left">用户名（请填写常用邮箱号）</p>
+        <form>
+        <input type="text" value="{{ user_name }}" name="user_name" style="height:20px;width:292px;float:left" disabled />
+        </form>
+      </div>
+      <div style="height:50px">
+        <p align="left">密码（8位以上数字或字母）</p>
+        <form>
+        <input type="text" value="{{ password }}" name="password" style="height:20px;width:292px;float:left" disabled />
+        </form>
+      </div>
+      <div style="height:50px">
+        <p align="left">昵称</p>
+        <form>
+        <input type="text" value="{{ nickname }}" name="nickname" style="height:20px;width:292px;float:left">
+        </form>
+      </div>
+      <div style="height:50px">
+        <p align="left">微信号</p>
+        <form>
+        <input type="text" value="{{ wechat }}" name="wechat" style="height:20px;width:292px;float:left">
+        </form>
+      </div>
+      <div style="height:50px">
+        <p align="left">所在城市</p>
+        <form>
+        <input type="text" value="{{ location }}" name="location" style="height:20px;width:292px;float:left">
+        </form>
+      </div>
+
+    </div>
+
+    <div style="background-color:white;line-height;50px:height:50px">
+      <form>
+      <input type="submit" value="提交更改" name="changes_sub" onclick=”javascript:history.back(-1)" style="height:40px;width:300px;">
+      </form>
+    </div>
+
+  </div>
+
+</body>
+</html>

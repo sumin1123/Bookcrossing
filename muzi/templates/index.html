@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+</head>
+<body>
+
+  <div style="width:300px" align="center">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <div style="background-color:black;line-height:50px;height:50px">
+      <h4 align="center" style="color:white">朋友间的图书馆</h4>
+    </div>
+
+    <div style="height:450px;">
+      简介
+    </div>
+
+    <div style="background-color:white;line-height;50px:height:50px">
+      <form action = "register">
+      <input type="submit" value="注册" name="register" style="height:40px;width:147px;">
+      </form>
+    <!--增加的地方-->
+      <form action = "login">
+      <input type="submit" value="登录" name="sign_in" style="height:40px;width:148px;">
+      </form>
+     <!--结束-->
+    </div>
+
+  </div>
+
+</body>
+</html>
