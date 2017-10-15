@@ -6,7 +6,7 @@ DB_SQLITE_NAME="bookcrossing.db"
 
 def db_init():
     '''''
-    Author: Justin.Zhang
+    Author: Justin
     Date: 2017-10-15
     Description: 创建数据库表
     '''
