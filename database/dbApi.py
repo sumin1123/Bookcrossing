@@ -12,7 +12,7 @@ DB_SQLITE_NAME="bookcrossing.db"
 
 def insert_user_info(user_check_in):
     """
-    功能：将用户注册的信息存入数据库
+    功能：将用户注册的信息存入数据库（1）
     Args:
     user_check_in: 用户注册时的信息，数据类型dict。例如：{'user_name' : ['password', 'nickname', 'wechat', 'location']}
     """
@@ -45,13 +45,13 @@ def insert_user_info(user_check_in):
     conn.commit()
 
 
-def get_user_password(user_name=None):
+def get_user_info(user_name=None):
     """
-    功能：根据输入user_name得到对应的password
+    功能：根据输入user_name得到对应的用户信息（2）
     Args:
     user_name: 用户名
     return:
-    1. 如果用户已经注册，返回该用户对应的密码
+    1. 如果用户已经注册，返回该用户对应的信息
     2. 如果用户没有注册，返回None
     """
 
@@ -65,8 +65,8 @@ def get_user_password(user_name=None):
     # 获取游标
     sqlite_cursor = conn.cursor()
 
-    # 添加一条记录
-    sql_select = "SELECT password FROM users WHERE user_name = user_name"
+    # 查询一条记录
+    sql_select = "SELECT * FROM users WHERE user_name = user_name"
     try:
         sqlite_cursor.execute(sql_select)
         row = sqlite_cursor.fetchone()
@@ -74,15 +74,13 @@ def get_user_password(user_name=None):
         print("查询用户数据失败！" + "\n" + e.args[0])
         return
 
-    if row:
-        return row[0]
-    else:
-        return None
+    # print("userInfo is: " + str(row[2]))
+    return row
 
 
 def get_user_books(user_id=None):
     """
-    根据 user_id 得到用户所有已发布的书的信息
+    功能：根据 user_id 得到用户所有已发布的书的信息（3）
     Args:
         user_id(int): 用户id
     Return:
@@ -136,7 +134,7 @@ def get_user_books(user_id=None):
 
 def get_books_detail(local_id=None):
     """
-    根据 local_id 得到数据库内相关书的详细信息
+    功能：根据 local_id 得到数据库内相关书的详细信息（4）
     Args:
         local_id(int): 书籍 local_id
     Return:
@@ -177,10 +175,10 @@ def get_books_detail(local_id=None):
 
 def get_books_list(isbn=None, title=None):
     """
-    用户输入 isbn 或者 title 检索数据库内是否有相关书籍
+    功能：用户输入 isbn 或者 title 检索数据库内是否有相关书籍
     根据 isbn 或者 title 检索，每次检索的条件只有一个，其中
         isbn 全部匹配
-        title 模糊查找，部分匹配即可。如果实现困难则改为全部匹配
+        title 模糊查找，部分匹配即可。如果实现困难则改为全部匹配（5）
     Args:
         isbn(int): 书籍 isbn 号
         title(str): 书名
@@ -214,10 +212,9 @@ def get_books_list(isbn=None, title=None):
 
 def insert_book(users_id=None, local_id=None):
     """
-    用户发布共享书
+    功能：用户发布共享书（6）
     Args:
-        users_id(int): 发起书籍共享请求的用户的 id， User 表的主键
-        local_id(int): 书籍识别号， Local_shelf 表的主键
+        users_id(int): 发起书籍共享请求的用户的id， User 表的主键
     Return:
         # 1, 存在该书籍，书籍发布人是删除者，成功删除书籍
         {
@@ -241,7 +238,7 @@ def insert_book(users_id=None, local_id=None):
 
 def delete_book(users_id=None, local_id=None):
     """
-    用户删除已发布的书
+    功能：用户删除已发布的书（7）
     Args:
         users_id(int): 发起删除请求的用户的 id， User 表的主键
         local_id(int): 书籍识别号， Local_shelf 表的主键
@@ -272,4 +269,5 @@ if __name__ == "__main__":
     insert_user_info(test_user1)
 
     # 测试函数 2
-    get_user_password('张旭')
+    userInfo = get_user_info('张旭')
+    print("The user ID is: " + str(userInfo[0]))

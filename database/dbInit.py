@@ -34,11 +34,31 @@ def db_init():
 
     # 创建表
     sql_users_add = '''CREATE TABLE users(
-                    user_id INTEGER PRIMARY KEY autoincrement, user_name text, password text, nickname text, wechat_id text, location text);'''
+                    user_id INTEGER PRIMARY KEY autoincrement,
+                    user_name text,
+                    password text,
+                    nickname text,
+                    wechat_id text,
+                    location text
+                    );'''
     sql_booklist_add = '''CREATE TABLE book_list(
-                    local_id INTEGER PRIMARY KEY, isbn int, state int, user_id int);'''
+                    local_id INTEGER PRIMARY KEY autoincrement,
+                    isbn int,
+                    state int,
+                    user_id int
+                    );'''
     sql_bookdetails_add = '''CREATE TABLE book_details(
-                    isbn INTEGER PRIMARY KEY, douban_id int, image text, title text, alt text, author text, publisher text, tags text, summary text, global_id int);'''
+                    isbn INTEGER PRIMARY KEY,
+                    douban_id int,
+                    image text,
+                    title text,
+                    alt text,
+                    author text,
+                    publisher text,
+                    tags text,
+                    summary text,
+                    global_id int
+                    );'''
 
     try:
         sqlite_cursor.execute(sql_users_add)
