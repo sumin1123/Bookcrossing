@@ -34,7 +34,7 @@ def db_init():
 
     # 创建表
     sql_users_add = '''CREATE TABLE users(
-                    user_id INTEGER PRIMARY KEY autoincrement,
+                    user_id INTEGER PRIMARY KEY autoincrement NOT NULL,
                     user_name text,
                     password text,
                     nickname text,
@@ -42,13 +42,13 @@ def db_init():
                     location text
                     );'''
     sql_booklist_add = '''CREATE TABLE book_list(
-                    local_id INTEGER PRIMARY KEY autoincrement,
+                    local_id INTEGER PRIMARY KEY autoincrement NOT NULL,
                     isbn int,
                     state int,
                     user_id int
                     );'''
     sql_bookdetails_add = '''CREATE TABLE book_details(
-                    isbn INTEGER PRIMARY KEY,
+                    isbn INTEGER PRIMARY KEY NOT NULL,
                     douban_id int,
                     image text,
                     title text,
@@ -57,7 +57,7 @@ def db_init():
                     publisher text,
                     tags text,
                     summary text,
-                    global_id int
+                    global_id identity(1,1)
                     );'''
 
     try:

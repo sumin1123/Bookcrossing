@@ -3,7 +3,7 @@ import sqlite3
 import json
 
 """
-目前有6个函数
+目前有8个函数
 其功能，传入参数和返回值，返回值的格式都在 docstring 中写出
 """
 
@@ -15,6 +15,9 @@ def insert_user_info(user_check_in):
     功能：将用户注册的信息存入数据库（1）
     Args:
     user_check_in: 用户注册时的信息，数据类型dict。例如：{'user_name' : ['password', 'nickname', 'wechat', 'location']}
+    Return:
+        # 1, 发布成功则返回1
+        # 2, 发布失败则返回0
     """
     # 取出输入的字典参数值
     for k, v in user_check_in.items():
@@ -41,8 +44,10 @@ def insert_user_info(user_check_in):
         sqlite_cursor.execute(sql_insert)
     except sqlite3.Error as e:
         print("添加用户数据失败！" + "\n" + e.args[0])
-        return
+        return 0
+
     conn.commit()
+    return 1
 
 
 def get_user_info(user_name=None):
@@ -72,7 +77,7 @@ def get_user_info(user_name=None):
         row = sqlite_cursor.fetchone()
     except sqlite3.Error as e:
         print("查询用户数据失败！" + "\n" + e.args[0])
-        return
+        return 0
 
     # print("userInfo is: " + str(row[2]))
     return row
@@ -110,13 +115,11 @@ def get_user_books(user_id=None):
         }
 
 
-
     result = []
 
     conn = sqlite3.connect('bookcrossing.db')
     c = conn.cursor()
     c.execute("SELECT local_id, isbn, state, user_id FROM book_list WHERE user_id=?", (user_id))
-    #c.execute("SELECT user_id, user_name, password, nickname, wechat_id, location FROM users WHERE user_id=?", (user_id))
     rows = c.fetchall()
 
     if rows:
@@ -129,7 +132,6 @@ def get_user_books(user_id=None):
     """
 
     pass
-
 
 
 def get_books_detail(local_id=None):
@@ -210,38 +212,44 @@ def get_books_list(isbn=None, title=None):
     pass
 
 
-def insert_book(users_id=None, local_id=None):
+def insert_book(isbn, state=1, user_id=None):
     """
     功能：用户发布共享书（6）
     Args:
         users_id(int): 发起书籍共享请求的用户的id， User 表的主键
     Return:
-        # 1, 存在该书籍，书籍发布人是删除者，成功删除书籍
-        {
-            'state': 'success',
-            'result': 'Book deleted successfully.'
-        }
-        # 2, 存在该书籍，但是书籍发布人不是删除者，不删除
-        {
-            'state': 'denied',
-            'result': 'Book deleted failed. It belongs to others.'
-        }
-        # 3, 不存在该书籍
-        {
-            'state': 'notfound',
-            'result': 'Book not found.'
-        }
+        # 1, 发布成功则返回1
+        # 2, 发布失败则返回0
     """
+    # 连接数据库
+    try:
+        conn = sqlite3.connect(DB_SQLITE_NAME)
+    except sqlite3.Error as e:
+        print("连接sqlite3数据库失败" + "\n" + e.args[0])
+        return
 
-    pass
+    # 获取游标
+    sqlite_cursor = conn.cursor()
+
+    # 添加一条记录
+    sql_insert = "INSERT INTO book_list(isbn, state, user_id) \
+                VALUES('%s', '%s', '%s')" % (isbn, state, user_id)
+    try:
+        sqlite_cursor.execute(sql_insert)
+    except sqlite3.Error as e:
+        print("添加用户书籍失败！" + "\n" + e.args[0])
+        return 0
+
+    conn.commit()
+    return 1
 
 
 def delete_book(users_id=None, local_id=None):
     """
     功能：用户删除已发布的书（7）
     Args:
-        users_id(int): 发起删除请求的用户的 id， User 表的主键
-        local_id(int): 书籍识别号， Local_shelf 表的主键
+        users_id(int): 发起删除请求的用户的 id， users 表的主键
+        local_id(int): 书籍识别号， book_list 表的主键
     Return:
         # 1, 存在该书籍，书籍发布人是删除者，成功删除书籍
         {
@@ -263,11 +271,64 @@ def delete_book(users_id=None, local_id=None):
     pass
 
 
+def insert_book_details(bookInfo):
+    """
+    功能：插入书籍详情，来自豆瓣（8）
+    Args:
+        bookInfo: 列表类型，里面包含[isbn, douban_id, image, title, alt, author, publisher, tags, summary, global_id]
+    Return:
+        # 1, 插入成功则返回1
+        # 2, 插入失败则返回0
+    """
+    # 连接数据库
+    try:
+        conn = sqlite3.connect(DB_SQLITE_NAME)
+    except sqlite3.Error as e:
+        print("连接sqlite3数据库失败" + "\n" + e.args[0])
+        return
+
+    # 获取游标
+    sqlite_cursor = conn.cursor()
+
+    # 添加一条记录
+    sql_insert = "INSERT INTO book_details(isbn, douban_id, image, title, alt, author, publisher, tags, summary, global_id) \
+                VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" \
+                % (bookInfo[0], bookInfo[1], bookInfo[2], bookInfo[3], bookInfo[4], bookInfo[5], bookInfo[6], bookInfo[7], bookInfo[8], bookInfo[9])
+    try:
+        sqlite_cursor.execute(sql_insert)
+    except sqlite3.Error as e:
+        print("添加书籍详情失败！" + "\n" + e.args[0])
+        return 0
+
+    conn.commit()
+    return 1
+
+
 if __name__ == "__main__":
     # 测试函数 1
     test_user1 = {'张旭' : ['123456', 'Justin', 'good123', '北京']}
-    insert_user_info(test_user1)
+    if insert_user_info(test_user1):
+        print("insert_user_info function(1) passed")
+    else:
+        print("insert_user_info function(1) failed")
 
     # 测试函数 2
     userInfo = get_user_info('张旭')
-    print("The user ID is: " + str(userInfo[0]))
+
+    if userInfo:
+        print("get_user_info function(2) passed")
+    else:
+        print("get_user_info function(2) failed or user not registered")
+
+    # 测试函数 6
+    if insert_book("1234567891234", "1", userInfo[0]) and insert_book("9999999999999", "1", userInfo[0]):
+        print("insert_book function(6) passed")
+    else:
+        print("insert_book function(6) failed")
+
+    # 测试函数 8
+    book1 = [1234567891234, 22, 'http://g.com', 'My god', 'story to say', 'Tom', '', '', '', '']
+    if insert_book_details(book1):
+        print("insert_book_details function(8) passed")
+    else:
+        print("insert_book_details function(8) failed")
