@@ -16,7 +16,8 @@ def db_init():
         sqlite_conn = sqlite3.connect(DB_SQLITE_NAME)
     except sqlite3.Error as e:
         print("连接sqlite3数据库失败" + "\n" + e.args[0])
-
+        # thxiami: 如果这里数据库连接失败，下面的代码就无法运行，所以这里直接返回，不执行下面的代码
+        return
     # 获取游标
     sqlite_cursor = sqlite_conn.cursor()
 
