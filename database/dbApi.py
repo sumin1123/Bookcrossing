@@ -113,25 +113,38 @@ def get_user_books(user_id=None):
             'state': 'failure',
             'result': 'User not found.'
         }
-
+        # 3, 如果查询失败，返回0
+    """
 
     result = []
 
-    conn = sqlite3.connect('bookcrossing.db')
-    c = conn.cursor()
-    c.execute("SELECT local_id, isbn, state, user_id FROM book_list WHERE user_id=?", (user_id))
-    rows = c.fetchall()
+    # 连接数据库
+    try:
+        conn = sqlite3.connect(DB_SQLITE_NAME)
+    except sqlite3.Error as e:
+        print("连接sqlite3数据库失败" + "\n" + e.args[0])
+        return
 
-    if rows:
-        for row in rows:
-            result.append(row)
-    else:
-        result = 'User not found.'
+    # 获取游标
+    sqlite_cursor = conn.cursor()
 
-    return result
-    """
+    # 查询一条记录
+    sql_select = "SELECT local_id, isbn, state, user_id FROM book_list WHERE user_id = user_id"
+    try:
+        sqlite_cursor.execute(sql_select)
+        rows = sqlite_cursor.fetchall()
+        if rows:
+            for row in rows:
+                result.append(row)
+            resultReturn = {'state': 'success', 'result': result}
+        else:
+            #result = 'User not found.'
+            resultReturn = {'state': 'failure', 'result': 'User not found.'}
+    except sqlite3.Error as e:
+        print("查询用户数据失败！" + "\n" + e.args[0])
+        return 0
 
-    pass
+    return resultReturn
 
 
 def get_books_detail(local_id=None):
@@ -332,3 +345,7 @@ if __name__ == "__main__":
         print("insert_book_details function(8) passed")
     else:
         print("insert_book_details function(8) failed")
+
+    # 测试函数3
+    userBooks = get_user_books(userInfo[0])
+    print("User books are: ", userBooks)
