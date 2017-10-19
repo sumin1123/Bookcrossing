@@ -323,23 +323,72 @@ def test_insert_user_info():
     test_user2 = {'xiami' : ['123456', 'xiami', 'good123', '北京']}
     test_user3 = {'test' : ['123456', 'test', 'good123', '北京']}
 
-    for i in [test_user1, test_user2, test_user3]:
+    print("##### Function(1) test result #####")
 
+    for i in [test_user1, test_user2, test_user3]:
 
         if insert_user_info(i):
             print("insert_user_info function(1) passed")
         else:
             print("insert_user_info function(1) failed")
 
+    print("\n")
+
 
 def test_get_user_info(user_name):
     # 测试函数 2
     userInfo = get_user_info(user_name)
-    print('userInfo:', userInfo)
+
+    print("##### Function(2) test result #####")
+
     if userInfo:
         print("get_user_info function(2) passed")
     else:
         print("get_user_info function(2) failed or user not registered")
+
+    print('userInfo:', userInfo)
+
+    print("\n")
+
+def test_insert_book(user_name):
+    # 测试函数 6
+    userInfo = get_user_info(user_name)
+
+    print("##### Function(6) test result #####")
+
+    if insert_book("1234567891234", "1", userInfo[0]) and insert_book("9999999999999", "1", userInfo[0]):
+        print("insert_book function(6) passed")
+    else:
+        print("insert_book function(6) failed")
+
+    print("\n")
+
+
+def test_insert_book_details(book1):
+    # 测试函数 8
+
+    print("##### Function(8) test result #####")
+
+    if insert_book_details(book1):
+        print("insert_book_details function(8) passed")
+    else:
+        print("insert_book_details function(8) failed")
+
+    print("\n")
+
+
+def test_get_user_books(user_name):
+    # 测试函数3
+    userInfo = get_user_info(user_name)
+    userBooks = get_user_books(userInfo[0])
+
+    print("##### Function(3) test result #####")
+
+    if userBooks:
+        print("get_user_books function(3) passed")
+        print("User books are: ", userBooks)
+    else:
+        print("get_user_books function(3) failed")
 
 
 if __name__ == "__main__":
@@ -347,29 +396,18 @@ if __name__ == "__main__":
 
     test_get_user_info('xiami')
 
+    test_insert_book('张旭')
+
+    book1 = [1234567891234, 22, 'http://g.com', 'My god', 'story to say', 'Tom', '', '', '', '']
+    test_insert_book_details(book1)
+
+    test_get_user_books('张旭')
+
     """
     # 以下测试函数都可以类似上面写入为一个单独的函数进行测试
     # 这样便于单独测试某个函数，不需要测试时在这里注释掉即可
     # 测试时候可以配合使用 assert ，同时输出测试失败的原因和测试数据
-    
+
     # 测试函数 6
-    userInfo = get_user_info('张旭')
-    if insert_book("1234567891234", "1", userInfo[0]) and insert_book("9999999999999", "1", userInfo[0]):
-        print("insert_book function(6) passed")
-    else:
-        print("insert_book function(6) failed")
 
-    # 测试函数 8
-    book1 = [1234567891234, 22, 'http://g.com', 'My god', 'story to say', 'Tom', '', '', '', '']
-    if insert_book_details(book1):
-        print("insert_book_details function(8) passed")
-    else:
-        print("insert_book_details function(8) failed")
-<<<<<<< HEAD
-
-    # 测试函数3
-    userBooks = get_user_books(userInfo[0])
-    print("User books are: ", userBooks)
-=======
     """
->>>>>>> e0d28d167fecf7a4a6e86147431b4305f4943038
