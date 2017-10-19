@@ -92,7 +92,7 @@ def get_user_books(user_id=None):
         # 1, 如果存在用户，不管是否发布过书，都按以下格式返回
         # 如果没发布过书， result 为 []
         {
-            'state': 'success',
+            'status': 'success',
             'result': [{
                 'local_id': 1,
                 'isbn': 9999,
@@ -110,7 +110,7 @@ def get_user_books(user_id=None):
         }
         # 2, 如果不存在用户，返回以下格式
         {
-            'state': 'failure',
+            'status': 'failure',
             'result': 'User not found.'
         }
         # 3, 如果查询失败，返回0
@@ -129,17 +129,17 @@ def get_user_books(user_id=None):
     sqlite_cursor = conn.cursor()
 
     # 查询一条记录
-    sql_select = "SELECT local_id, isbn, state, user_id FROM book_list WHERE user_id = user_id"
+    sql_select = "SELECT local_id, isbn, state, user_id FROM book_list WHERE user_id = ?"
     try:
-        sqlite_cursor.execute(sql_select)
+        sqlite_cursor.execute(sql_select, (user_id,))
         rows = sqlite_cursor.fetchall()
         if rows:
             for row in rows:
                 result.append(row)
-            resultReturn = {'state': 'success', 'result': result}
+            resultReturn = {'status': 'success', 'result': result}
         else:
             #result = 'User not found.'
-            resultReturn = {'state': 'failure', 'result': 'User not found.'}
+            resultReturn = {'status': 'failure', 'result': 'User not found.'}
     except sqlite3.Error as e:
         print("查询用户数据失败！" + "\n" + e.args[0])
         return 0
@@ -266,17 +266,12 @@ def delete_book(users_id=None, local_id=None):
     Return:
         # 1, 存在该书籍，书籍发布人是删除者，成功删除书籍
         {
-            'state': 'success',
+            'status': 'success',
             'result': 'Book deleted successfully.'
         }
-        # 2, 存在该书籍，但是书籍发布人不是删除者，不删除
+        # 2, 不存在该书籍
         {
-            'state': 'denied',
-            'result': 'Book deleted failed. It belongs to others.'
-        }
-        # 3, 不存在该书籍
-        {
-            'state': 'notfound',
+            'status': 'failure',
             'result': 'Book not found.'
         }
     """
