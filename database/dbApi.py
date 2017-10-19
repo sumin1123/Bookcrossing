@@ -257,14 +257,13 @@ def insert_book(isbn, state=1, user_id=None):
     return 1
 
 
-def delete_book(users_id=None, local_id=None):
+def delete_book(local_id=None):
     """
     功能：用户删除已发布的书（7）
     Args:
-        users_id(int): 发起删除请求的用户的 id， users 表的主键
         local_id(int): 书籍识别号， book_list 表的主键
     Return:
-        # 1, 存在该书籍，书籍发布人是删除者，成功删除书籍
+        # 1, 存在该书籍, 成功删除书籍
         {
             'status': 'success',
             'result': 'Book deleted successfully.'
