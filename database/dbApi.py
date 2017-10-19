@@ -32,7 +32,7 @@ def insert_user_info(user_check_in):
         conn = sqlite3.connect(DB_SQLITE_NAME)
     except sqlite3.Error as e:
         print("连接sqlite3数据库失败" + "\n" + e.args[0])
-        return
+        return 0
 
     # 获取游标
     sqlite_cursor = conn.cursor()
@@ -71,9 +71,9 @@ def get_user_info(user_name=None):
     sqlite_cursor = conn.cursor()
 
     # 查询一条记录
-    sql_select = "SELECT * FROM users WHERE user_name = user_name"
+    sql_select = "SELECT * FROM users WHERE user_name = ?"
     try:
-        sqlite_cursor.execute(sql_select)
+        sqlite_cursor.execute(sql_select, (user_name,))
         row = sqlite_cursor.fetchone()
     except sqlite3.Error as e:
         print("查询用户数据失败！" + "\n" + e.args[0])
@@ -317,23 +317,43 @@ def insert_book_details(bookInfo):
     return 1
 
 
-if __name__ == "__main__":
+def test_insert_user_info():
     # 测试函数 1
     test_user1 = {'张旭' : ['123456', 'Justin', 'good123', '北京']}
-    if insert_user_info(test_user1):
-        print("insert_user_info function(1) passed")
-    else:
-        print("insert_user_info function(1) failed")
+    test_user2 = {'xiami' : ['123456', 'xiami', 'good123', '北京']}
+    test_user3 = {'test' : ['123456', 'test', 'good123', '北京']}
 
+    for i in [test_user1, test_user2, test_user3]:
+
+
+        if insert_user_info(i):
+            print("insert_user_info function(1) passed")
+        else:
+            print("insert_user_info function(1) failed")
+
+
+def test_get_user_info(user_name):
     # 测试函数 2
-    userInfo = get_user_info('张旭')
-
+    userInfo = get_user_info(user_name)
+    print('userInfo:', userInfo)
     if userInfo:
         print("get_user_info function(2) passed")
     else:
         print("get_user_info function(2) failed or user not registered")
 
+
+if __name__ == "__main__":
+    test_insert_user_info()
+
+    test_get_user_info('xiami')
+
+    """
+    # 以下测试函数都可以类似上面写入为一个单独的函数进行测试
+    # 这样便于单独测试某个函数，不需要测试时在这里注释掉即可
+    # 测试时候可以配合使用 assert ，同时输出测试失败的原因和测试数据
+    
     # 测试函数 6
+    userInfo = get_user_info('张旭')
     if insert_book("1234567891234", "1", userInfo[0]) and insert_book("9999999999999", "1", userInfo[0]):
         print("insert_book function(6) passed")
     else:
@@ -345,7 +365,11 @@ if __name__ == "__main__":
         print("insert_book_details function(8) passed")
     else:
         print("insert_book_details function(8) failed")
+<<<<<<< HEAD
 
     # 测试函数3
     userBooks = get_user_books(userInfo[0])
     print("User books are: ", userBooks)
+=======
+    """
+>>>>>>> e0d28d167fecf7a4a6e86147431b4305f4943038
