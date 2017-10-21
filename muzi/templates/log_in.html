@@ -11,9 +11,13 @@
       <h4 align="center" style="color:white">登录</h4>
     </div>
 
+{% for messages in get_flashed_messages() %}
+    <div>{{ messages}}</div>
+{% endfor %}
+
     <div style="height:450px;">
       
-        <form action = "login_success">
+        <form action = "/login"  method="post">
             <div style="height:50px">
             <p align="left">用户名（常用邮箱号）</p>
             </div>
@@ -42,7 +46,7 @@
     </div>
 
     <div style="background-color:white;line-height;50px:height:50px">
-      <form action = "register">
+      <form action = "/register" >
       <input type="submit" value="注册" name="action" style="height:40px;width:147px;">
       </form>
     </div>
