@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %} 123 {% endblock %}
+{% block script %}
+  <script>
+        function deleteBookDiv(bookLocalId, deleteResult) {
+
+            var deleteStatus = deleteResult.status;
+            var deleteMsg = deleteResult.result;
+
+            if (deleteStatus === 'success') {
+                var divId = "data-" + bookLocalId;
+                var bookDiv = document.getElementById(divId);
+                console.log("deleteStatus:", deleteStatus);
+                console.log("deleteMsg:",deleteMsg);
+                console.log("bookDiv:", bookDiv);
+                if (bookDiv) {
+                    var bookDivParent = bookDiv.parentNode;
+                    console.log("bookDivParent:", bookDivParent);
+                    bookDivParent.removeChild(bookDiv);
+                    alert(deleteMsg)
+                }
+            }
+            else {
+                alert(deleteMsg)
+            }
+        }
+
+        function request (bookLocalId) {
+          // ajax
+          var xmlhttp;
+          if (window.XMLHttpRequest) {
+              // code for modern browsers
+              xmlhttp = new XMLHttpRequest();
+          }
+          else {
+              // code for old IE browsers
+              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+          }
+          // 定义 XMLHttpRequest 状态发生变化时调用的函数
+          xmlhttp.onreadystatechange = function() {
+              if (this.readyState === 4 && this.status === 200) {
+//                   var data = this.responseText;
+                  var deleteResult = JSON.parse(this.responseText);
+
+                  console.log('删除书的 local id:', bookLocalId);
+                  console.log('deleteResult：', deleteResult)
+
+                  deleteBookDiv(bookLocalId, deleteResult);
+              }
+          };
+          // true 代表是否为异步， true 为异步， false 为同步
+          // 组装后端删除的 api path
+          xmlhttp.open('DELETE', "/book/" + bookLocalId, true);
+          // xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xmlhttp.send();
+      }
+  </script>
+{% endblock %}
+
+    {% block navbar %}
+      {{ super() }}
+       {% block current_page %}我的书架{% endblock %}
+    {% endblock %}
+
+    {% block content %}
+    <div style="background-color:white;line-height:50px;height:50px">
+      <form action="/book" method="post">
+        <input type="text" name="input_search" style="height:20px;width:240px">
+        <input type="submit" value="搜索" name="search" style="height:30px;width:48px">
+      </form>
+    </div>
+    <div style="width:300px;height:400px;overflow:scroll" align="center">
+      {% if prompt %}
+        <p><h1>{{ prompt }}</h1></p>
+      {% endif %}
+
+      {% if book_list %}
+
+        {% for book in book_list %}
+          <div id="data-{{ book.local_id }}" style="width:140px;height:290px;float:left">
+            <div style="width:140px;height:240px;float:left">
+              <a href="/book/{{ book.local_id }}" target="_blank" style='text-decoration:none'>
+                <img src="{{ book.image }}">
+              </a>
+              <p>{{ book.title }}</p>
+              <button style="height:30px;width:101px;" onclick="request({{ book.local_id }})">删除</button>
+            </div>
+          </div>
+        {% endfor %}
+
+      {% endif %}
+    </div>
+    {% endblock %}
+
+    {% block foot %}
+      {{ super() }}
+    {% endblock%}
+

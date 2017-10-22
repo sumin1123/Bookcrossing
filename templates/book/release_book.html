@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block script %}
+{% endblock %}
+
+    {% block navbar %}
+      {{ super() }}
+      {% block current_page %}发布书{% endblock %}
+    {% endblock %}
+
+    {% block content %}
+      <div style="background-color:white;line-height:50px;height:50px">
+        <form action="/book/release" method="post">
+        <input type="text" name="isbn" style="height:20px;width:240px">
+          <button type="submit" style="height:30px;width:48px">发布</button>
+        </form>
+      </div>
+      {% if prompt %}
+        {{ prompt }}
+      {% endif %}
+
+      {% if book_details %}
+        <div style="width:300px;height:50px">
+          <p align="left">{{ release_information }}</p>
+        </div>
+        <div style="width:300px;height:300px;overflow:scroll">
+          <div style="width:300px;height:180px;">
+            <div style="width:120px;height:180px;float:left;margin:10px auto">
+              <img src="{{ book_details.image }}">
+            </div>
+          </div>
+          <div style="width:300px;height:120px">
+            <p align="left">书名：{{ book_details.title }}</p>
+            <p align="left">作者：{{ book_details.author }}</p>
+            <p align="left">出版社：{{ book_details.publisher }}</p>
+            <p align="left">isbn号：{{ book_details.isbn }}</p>
+            <p align="left">豆瓣网：</p>
+            <p align="left">{{ book_details.alt }}</p>
+          </div>
+        </div>
+        <div style="width:300px;height:50px;" align="left">
+          <form action="/book/release/newbook" method="post">
+            <button type="submit" name="refer" style="height:30px;width:80px;">提交</button>
+          </form>
+        </div>
+      {% endif %}
+    {% endblock %}
+
+    {% block foot %}
+      {{ super() }}
+    {% endblock%}
+
+

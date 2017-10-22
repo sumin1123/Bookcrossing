@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+</head>
+<body>
+
+  <div style="width:300px" align="center">
+
+    <div style="background-color:black;line-height:50px;height:50px">
+      <form>
+      <input type="submit" value="搜索书" name="" style="background-color:black;color:white;height:40px;width:80px;border:none">
+      <input type="submit" value="帮助" name="help" style="height:30px;width:48px">
+      <input type="submit" value="修改个人信息" name="modify_information" style="height:30px;width:105px">
+      <input type="submit" value="登出" name="logout" style="height:30px;width:48px">
+      </form>
+    </div>
+    <div style="background-color:white;line-height:50px;height:50px">
+      <form>
+      <input type="text" name="input_search" style="height:20px;width:240px">
+      <input type="submit" value="搜索" name="search" style="height:30px;width:48px">
+      </form>
+    </div>
+
+    <div style="width:300px;height:400px;overflow:scroll" align="center">
+    {% for image in list %}
+      <div style="width:140px;height:240px;float:left">
+        <a href="/details/{{image}}" target="_blank" style='text-decoration:none'>
+        <img src="https://img3.doubanio.com/mpic/s29536350.jpg">
+        <p>这是书名这是书名这是书名这是书名这是书名</p>
+        </a>
+      </div>
+    {% endfor %}
+    </div>
+
+    <div style="background-color:white;line-height;50px:height:50px">
+      <form>
+      <input type="submit" value="发布书" name="release_books" style="height:40px;width:147px;">
+      <input type="submit" value="我的书" name="my_books" style="height:40px;width:148px;">
+      </form>
+    </div>
+
+  </div>
+
+</body>
+</html>
