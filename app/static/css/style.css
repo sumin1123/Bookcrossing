@@ -1,0 +1,16 @@
+body {
+    padding-top: 50px;
+}
+
+.jumbotron {
+    min-height: 100vh;
+    padding-top: 13%; padding-bottom: 13%;
+    margin-bottom: 0px;
+	
+    background-image: url(../books.jpg);
+    background-position: 0% 0%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    text-shadow: black 0.3em 0.3em 0.3em;
+}

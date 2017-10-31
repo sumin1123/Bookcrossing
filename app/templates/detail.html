@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}BookCrossing{% endblock %}
+
+{% block page_content %}
+    {% if current_user.is_authenticated %}
+		<div class="container">
+		    <div class="row">
+		        <div class="col-sm-3" align="center" >
+		            <h3 class="text-center ">图书详情</h3>
+		            <img class="img-responsive img-rounded img-fluid" src="{{ image }}" alt="" >
+		        </div>
+		        <div class="col-sm-9">
+		            <div class="card mt-4">
+		                <div class="card-body">
+		                    <h3 class="card-title">{{ title }}</h3>
+		                    <h4>{{ author }}</h4>
+		                    <span class="text-warning" style="color: orange">&#9733; &#9733; &#9733; &#9733; &#9734;</span>4.0 stars
+		                    <p>出版社：{{ publisher }}<br />ISBN号：{{ isbns }}<br />豆瓣网链接：{{ alt }}<br /><p class="card-text text-warning">Tips：如果你对本书感兴趣，请微信与下方的图书发布人联系索取。</p></p>
+		                </div>
+		            </div>
+		            <div class="card-header" style="margin-bottom: 10px; margin-top: 20px">
+		                <strong>图书发布人信息</strong>
+		            </div>
+                <div class="row">
+    		            <div class="col-sm-3 col-xs-6">
+    		                <p><span class="label label-info" style="margin-right: 5px">昵称</span>发布人昵称：</p>
+                    </div>
+                    <div class="col-sm-6 col-xs-3">
+                        <a href=/friendbooks/{{ id }} target="_blank" style='text-decoration:none'>
+                        <button type="submit" class="label label-info" onclick="window.location.href('/friendbooks/{{ id }}')" style="margin-right:5px;width:100px">{{ username }}</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+    		                <p><span class="label label-warning" style="margin-right: 5px">坐标</span>发布人坐标：</p>
+                    </div>
+                    <div class="col-sm-6 col-xs-3">
+                        <a href=/friendlocation/{{ location }} target="_blank" style='text-decoration:none'>
+                        <button type="submit" class="label label-warning" onclick="window.location.href('/friendlocation/{{ location }}')" style="margin-right:5px;width:100px">{{ location }}</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+    		                <p><span class="label label-success" style="margin-right: 5px">微信</span>发布人微信：</p>
+                    </div>
+                    <div class="col-sm-6 col-xs-3">
+                        <button type="submit" class="label label-success" name="d" value="a" style="margin-right:5px;width:100px">{{ wechat }}</button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+		            <hr>
+		            <div>
+		                <strong>图书简介</strong>
+		            </div>
+                <div>
+		                <p>{{ summary }}</p>
+                </div>
+		    </div>
+		</div>
+		<footer>
+		    <div class="container">
+		        <p class="text-center text-white">Copyright &copy; Bookcrossing 2017</p>
+		    </div>
+		</footer>
+		{% else %}
+		<div class="container">
+		    <h1>Please login first!</h1>
+	  </div>
+		{% endif %}
+{% endblock %}

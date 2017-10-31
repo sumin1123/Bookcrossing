@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}BookCrossing{% endblock %}
+
+{% block page_content %}
+    {% if current_user.is_authenticated %}
+		<div class="container" align="center">
+		    <h2>搜索图书，请输入书名或ISBN号</h2>
+		</div>
+		<div class="container" align="center">
+		    <form class="form-inline" role="form">
+		        <div class="row">
+		            <div class="col-sm-2"></div>
+		            <div class="col-sm-6"><input type="text" class="form-control" placeholder="请输入书名或ISBN号码" name="title_my" style="margin-bottom: 15px; width: 99%"></div>
+		            <div class="col-sm-2"><button type="submit" class="btn btn-info" name="find_my" value="Find_my" style="margin-bottom: 15px; width: 99%">搜 索</button></div>
+		            <div class="col-sm-2"></div>
+		        </div>
+            <div class="container">
+							  <p style="color:red">{{ alert }}</p>
+						</div>
+		    </form>
+		</div>
+		<hr>
+		<div class="container container-fluid-left">
+				<div class="row">
+					  {% for i in list %}
+				        <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2" style="margin-bottom: 20px">
+							      <div class="card" align="center">
+                        <a href="/detail/{{ i[2] }}" target="_blank" style='text-decoration:none'>
+								        <img class="card-img-top" src="{{ i[0] }}" alt="/details/{{ i[2] }}" style="width:120px; height: 180px">
+								        <div class="card-block" style="width: 100%;">
+									          <h4 class="card-title" style="font-size:1.6rem; width: 100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ i[1] }}</h4>
+										    </div>
+                        </a>
+										</div>
+										<div align="center">
+                        <form>
+										    <button type="submit" class="btn btn-danger btn-sm" name="dele" value="{{ i[2] }}" style="margin-bottom: 15px; width: 75%">DELETE</button>
+												</form>
+									  </div>
+						    </div>
+						 {% endfor %}
+				 </div>
+		 </div>
+		<footer>
+		    <div class="container">
+		        <p class="text-center text-white">Copyright &copy; Bookcrossing 2017</p>
+		    </div>
+		</footer>
+		{% else %}
+		<div class="container">
+		    <h1>Please login first!</h1>
+	  </div>
+		{% endif %}
+{% endblock %}
