@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}BookCrossing{% endblock %}
+
+{% block page_content %}
+    {% if current_user.is_authenticated %}
+    <hr>
+		<div class="container" align="center">
+        <form role="form">
+        <div>
+            <h3>给 {{ user_na }} 发消息！</h3>
+        </div>
+        <hr>
+        <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"><button type="submit" class="btn btn-info" name="send_mail" value="Send_mail" style="margin-bottom: 15px; width: 100%">给他发信</button></div>
+        <div class="col-sm-4"></div>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" type="text" style="width:360px" rows="12" name="textarea"  value=？？></textarea>
+        </div>
+        </form>
+    </div>
+		<footer>
+		    <div class="container">
+
+		        <p class="text-center text-white">Copyright &copy; Bookcrossing 2017</p>
+		    </div>
+		</footer>
+		{% else %}
+		<div class="container">
+		    <h1>Please login first!</h1>
+	  </div>
+		{% endif %}
+{% endblock %}

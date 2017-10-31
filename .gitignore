@@ -2,9 +2,18 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.DS_Store
 
 # PyCharm dir
 .idea/
+
+# database
+*.sqlite
+
+# config&log
+venv/
+log/
+supervisor_gunicorn.conf
 
 # Distribution / packaging
 .Python

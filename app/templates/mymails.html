@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}BookCrossing{% endblock %}
+
+{% block page_content %}
+    {% if current_user.is_authenticated %}
+    <hr>
+		<div class="container" align="center">
+        <div>
+            <h3>朋友们给你的留言</h3>
+        </div>
+        <hr>
+        {% for i in list_u %}
+        <div class="row container">
+        <div class="col-sm-3"></div>
+        <div class="list-group col-sm-6">
+        <a class="list-group-item active">
+            <h4>{{ i[0] }} 给你的留言：</h4>
+        </a>
+        <a class="list-group-item">{{ i[1] }}</a>
+        <a class="list-group-item">{{ i[2] }}</a>
+        <a href='/mail/{{ i[3] }}' class="list-group-item active" style="background-color:#33cc33">给{{ i[0] }}回信</a>
+        </div>
+        <div class="col-sm-3"></div>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+		<footer>
+		    <div class="container">
+		        <p class="text-center text-white">Copyright &copy; Bookcrossing 2017</p>
+		    </div>
+		</footer>
+		{% else %}
+		<div class="container">
+		    <h1>Please login first!</h1>
+	  </div>
+		{% endif %}
+{% endblock %}

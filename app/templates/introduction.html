@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>introduction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+    #para1
+    {
+     margin: 0;
+     padding: 0;
+     margin-bottom:0px;
+    }
+
+
+.navbar li a, .navbar .navbar-brand {
+    color: #fff !important;
+}
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+}
+.navbar .navbar-nav .dropdown-menu {
+  background-color: #4d4d4d;
+  border-color: #000000;
+}
+
+    </style>
+</head>
+
+<body style="background-image: url(../static/sky.jpg); background-repeat: no-repeat;background-size: cover">
+  <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #4d4d4d">
+      <div class="container-fluid">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/"><strong>书游</strong> BookCrossing</a>
+          </div>
+          <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+              {% if current_user.is_authenticated %}
+                  <li><a href="{{ url_for('main.browse') }}">浏览</a></li>
+                  <li><a href="/location">坐标</a></li>
+                  <li><a href="/release">发布</a></li>
+                  <li><a href="{{ url_for('main.mybooks') }}">我的书</a></li>
+                  <li><a href="{{ url_for('main.mymails') }}">站内信</a></li>
+                  <li><a href="{{ url_for('main.introduction') }}">团队</a></li>
+              {% else %}
+                  <li><a href="{{ url_for('main.introduction') }}">团队</a></li>
+              {% endif %}
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+              {% if current_user.is_authenticated %}
+                  <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">账户<b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                          <li><a href="{{ url_for('auth.change_per_infor') }}">修改个人信息</a></li>
+                          <li><a href="{{ url_for('auth.change_email_request') }}">更换email</a></li>
+                          <li><a href="{{ url_for('auth.logout') }}">登出</a></li>
+                      </ul>
+                  </li>
+              {% else %}
+                  <li><a href="{{ url_for('auth.login') }}"><span class="glyphicon glyphicon-log-in"></span>Log In</a></li>
+                  <li class="active"><a href="{{ url_for('auth.register') }}"><span class="glyphicon glyphicon-user"></span>Register</a></li>
+              {% endif %}
+              </ul>
+          </div>
+      </div>
+  </nav>
+<div class="container">
+    <h2 style="color: white;">Book crossing team introduction</h2></div>
+    <div class="row">
+        <div class="container">
+            <div class="col-md-3" align="center" style="background-color:rgba(255,255,255,0.4); padding-top: 20px">
+                <img src="static/log/damao.gif" class="img-thumbnail" alt="Cinque Terre" width="120px" height="120px">
+                <h4>Coach: Damao</h4>
+            </div>
+            <div class="col-md-3" align="center" style="background-color:rgba(255,255,255,0.4); padding-top: 20px">
+                <img src="static/log/scott.gif" class="img-thumbnail" alt="Cinque Terre" width="120px" height="120px">
+                <h4>Coach: Scott</h4>
+            </div>
+            <div class="col-md-3" align="center" style="background-color:rgba(255,255,255,0.4); padding-top: 20px">
+                <img src="static/log/junyu.gif" class="img-thumbnail" alt="Cinque Terre" width="120px" height="120px">
+                <h4>Coach: Junyu</h4>
+            </div>
+            <div class="col-md-3" align="center" style="background-color:rgba(255,255,255,0.4); padding-top: 20px">
+                <img src="static/log/huang.gif" class="img-thumbnail" alt="Cinque Terre" width="120px" height="120px">
+                <h4>Member: Silong Li</h4>
+            </div>
+            <div class="col-md-12">
+                <p></p>
+            </div>
+            <div class="col-md-12">
+                <p></p>
+            </div>
+            <div class="col-md-12">
+                <p></p>
+            </div>
+            <div class="col-md-12">
+                <p></p>
+            </div>
+            <div class="col-md-12">
+                <p></p>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="container">
+                    <div class="col-md-3" align="center" style="background-color:rgba(255,255,255,0.4); padding-top: 20px">
+                        <img src="static/log/justin.gif" class="img-thumbnail" alt="Cinque Terre" width="120px" height="120px" >
+                        <h4>Member: Justin</h4>
+                    </div>
+                    <div class="col-md-3" align="center" style="background-color:rgba(255,255,255,0.4); padding-top: 20px">
+                        <img src="static/log/leo.gif" class="img-thumbnail" alt="Cinque Terre" width="120px" height="120px">
+                        <h4>Member: Leo-Huang</h4>
+                    </div>
+                    <div class="col-md-3" align="center" style="background-color:rgba(255,255,255,0.4); padding-top: 20px">
+                        <img src="static/log/yiwei.gif" class="img-thumbnail" alt="Cinque Terre" width="120px" height="120px">
+                        <h4>Member: Yiwei Li</h4>
+                    </div>
+                    <div class="col-md-3" align="center" style="background-color:rgba(255,255,255,0.4); padding-top: 20px">
+                        <img src="static/log/smpb.gif" class="img-thumbnail" alt="Cinque Terre" width="120px" height="120px">
+                        <h4>Member: SMPB</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
